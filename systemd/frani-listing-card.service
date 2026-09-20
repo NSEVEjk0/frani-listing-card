@@ -1,0 +1,20 @@
+[Unit]
+Description=Frani Listing Card — signed public listing cards on Unicity testnet2
+Documentation=https://github.com/NSEVEjk0/frani-listing-card
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/projects/frani-listing-card
+EnvironmentFile=-/home/ubuntu/projects/frani-listing-card/.env
+ExecStart=/usr/bin/node bin/listing.js daemon
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

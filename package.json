@@ -1,0 +1,26 @@
+{
+  "name": "frani-listing-card",
+  "version": "1.0.0",
+  "description": "Turn one buy/sell intent into a signed public listing card on Unicity testnet2. Made by CRYPTFRANI.",
+  "type": "module",
+  "bin": {
+    "listing": "bin/listing.js"
+  },
+  "scripts": {
+    "start": "node bin/listing.js daemon",
+    "post": "node bin/listing.js post",
+    "card": "node bin/listing.js card",
+    "search": "node bin/listing.js search",
+    "about": "node bin/listing.js about",
+    "help": "node bin/listing.js help",
+    "test": "node test/listing.test.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@unicitylabs/sphere-sdk": "0.17.3",
+    "ws": "^8.21.3"
+  }
+}
