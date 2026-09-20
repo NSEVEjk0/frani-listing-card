@@ -15,7 +15,7 @@ export const config = {
   deviceId: process.env.LISTING_DEVICE_ID || 'frani-listing-1',
   nametag: process.env.LISTING_NAMETAG || '',
   listingsDir: process.env.LISTING_DIR || './listings',
-  decimals: Number(process.env.LISTING_DECIMALS || '8'),
+  decimals: Number(process.env.LISTING_DECIMALS || '18'),
   // Market API. Leave blank to use the SDK default. The market bulletin board
   // is optional: if it is unreachable, cards still work as signed, shareable
   // objects and the DM contact / paid-introduction flow is unaffected.
