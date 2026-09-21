@@ -194,7 +194,18 @@ async function cmdDaemon() {
         amount: amountBase,
         memo: `Introduction for listing ${card.id}`,
       });
-      if (res.success && res.requestId) pendingIntros.set(res.requestId, { cardId: card.id, buyer });
+      if (res.success && res.requestId) {
+        // buyer is a transport pubkey; the incoming payment reports the buyer's
+        // CHAIN pubkey. Resolve and store it so the two match at settlement.
+        let chain = buyer;
+        try {
+          const peer = await sphere.resolve(buyer);
+          if (peer?.chainPubkey) chain = peer.chainPubkey;
+        } catch {
+          /* best effort */
+        }
+        pendingIntros.set(res.requestId, { cardId: card.id, buyer, chain });
+      }
       return res;
     },
   };
@@ -245,10 +256,11 @@ async function cmdDaemon() {
       return;
     }
 
-    // Find the most recent pending intro for this buyer.
+    // Find the most recent pending intro for this buyer. The incoming `buyer`
+    // is a chain pubkey; match against the resolved chain pubkey we stored.
     let match = null;
     for (const [requestId, info] of pendingIntros) {
-      if (info.buyer === buyer) {
+      if (info.chain === buyer || info.buyer === buyer) {
         match = { requestId, ...info };
         break;
       }
